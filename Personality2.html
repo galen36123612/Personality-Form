@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .radio-group, .checkbox-group {
+            margin: 10px 0;
+        }
+        .radio-group label, .checkbox-group label {
+            display: inline-block;
+            margin-right: 15px;
+            position: relative;
+        }
+        #summary {
+            width: 100%;
+            height: 150px;
+            margin-top: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted #666;
+        }
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: #555;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -125px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9em;
+        }
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-switch">
+        <button onclick="toggleLanguage()">中文/English</button>
+    </div>
+
+    <form id="personalityForm">
+    <div class="section">
+        <h3 class="zh">基本資料</h3>
+        <h3 class="en hidden">Basic Information</h3>
+
+        <label class="zh">姓名：</label>
+        <label class="en hidden">Name:</label>
+        <input type="text" id="name" name="name">
+        <br><br>
+
+        <label class="zh">性別：</label>
+        <label class="en hidden">Gender:</label>
+        <input type="text" id="gender" name="gender">
+        <br><br>
+
+        <label class="zh">年齡：</label>
+        <label class="en hidden">Age:</label>
+        <input type="text" id="age" name="age">
+        <br><br>
+
+        <div class="radio-group">
+            <label class="zh">血型：</label>
+            <label class="en hidden">Blood Type:</label><br>
+            <label class="tooltip">
+                <input type="radio" name="bloodType" value="A"> A
+                <span class="tooltiptext zh">偏內向、細膩、負責任，說話可能條理分明，喜歡帶點謹慎確認的語氣</span>
+                <span class="tooltiptext en hidden">Introverted, detailed, responsible, speaks methodically with careful confirmation</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="bloodType" value="B"> B
+                <span class="tooltiptext zh">開朗、有創意，可能用更多幽默和比喻，語言也比較隨性</span>
+                <span class="tooltiptext en hidden">Cheerful, creative, uses more humor and metaphors, casual speaking style</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="bloodType" value="O"> O
+                <span class="tooltiptext zh">自信、果斷，語氣直接，喜歡強調「我覺得這樣才對」</span>
+                <span class="tooltiptext en hidden">Confident, decisive, direct tone, likes to emphasize "I think this is right"</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="bloodType" value="AB"> AB
+                <span class="tooltiptext zh">冷靜又帶點矛盾，可能會用比較理性的分析，但偶爾有天馬行空的發言</span>
+                <span class="tooltiptext en hidden">Calm but contradictory, tends to use rational analysis but occasionally has whimsical remarks</span>
+            </label>
+        </div>
+
+        <div class="radio-group" style="display: flex; flex-wrap: wrap; gap: 20px;">
+            <label class="zh" style="width: 100%">星座：</label>
+            <label class="en hidden" style="width: 100%">Zodiac:</label>
+            <label class="tooltip">
+                <input type="radio" name="zodiac" value="fire">
+                <span class="zh">火象星座（牡羊、獅子、射手）</span>
+                <span class="en hidden">Fire Signs</span>
+                <span class="tooltiptext zh">外向、充滿激情，語氣會很有感染力</span>
+                <span class="tooltiptext en hidden">Extroverted, passionate, infectious tone</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="zodiac" value="earth">
+                <span class="zh">土象星座（金牛、處女、摩羯）</span>
+                <span class="en hidden">Earth Signs</span>
+                <span class="tooltiptext zh">實在、務實，喜歡分析和給建議</span>
+                <span class="tooltiptext en hidden">Practical, realistic, likes to analyze and give advice</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="zodiac" value="air">
+                <span class="zh">風象星座（雙子、天秤、水瓶）</span>
+                <span class="en hidden">Air Signs</span>
+                <span class="tooltiptext zh">聰明、愛交流，語言跳躍性強</span>
+                <span class="tooltiptext en hidden">Smart, communicative, with playful language</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="zodiac" value="water">
+                <span class="zh">水象星座（巨蟹、天蠍、雙魚）</span>
+                <span class="en hidden">Water Signs</span>
+                <span class="tooltiptext zh">感性、細膩，常用情感表達</span>
+                <span class="tooltiptext en hidden">Sensitive, detailed, often expresses emotions</span>
+            </label>
+        </div>
+
+        <div class="radio-group" style="display: flex; flex-wrap: wrap; gap: 20px; margin-top: 20px;">
+            <label style="width: 100%">MBTI:</label>
+            <label class="tooltip">
+                <input type="radio" name="mbti" value="analyst">
+                <span class="zh">分析型（INTJ、INTP、ENTJ、ENTP）</span>
+                <span class="en hidden">Analyst Types</span>
+                <span class="tooltiptext zh">愛邏輯，分析細緻</span>
+                <span class="tooltiptext en hidden">Logical, detailed analysis</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="mbti" value="guardian">
+                <span class="zh">守護型（ISFJ、ISTJ、ESFJ、ESTJ）</span>
+                <span class="en hidden">Guardian Types</span>
+                <span class="tooltiptext zh">實用派，強調「這對你有什麼幫助」</span>
+                <span class="tooltiptext en hidden">Practical, emphasizes "how this helps you"</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="mbti" value="diplomat">
+                <span class="zh">外交型（ENFP、ENFJ、INFP、INFJ）</span>
+                <span class="en hidden">Diplomat Types</span>
+                <span class="tooltiptext zh">熱情共情，喜歡鼓舞觀眾</span>
+                <span class="tooltiptext en hidden">Enthusiastic and empathetic, likes to inspire</span>
+            </label>
+            <label class="tooltip">
+                <input type="radio" name="mbti" value="explorer">
+                <span class="zh">探險型（ISFP、ISTP、ESFP、ESTP）</span>
+                <span class="en hidden">Explorer Types</span>
+                <span class="tooltiptext zh">靈活隨性，語言生動</span>
+                <span class="tooltiptext en hidden">Flexible and spontaneous, vivid language</span>
+            </label>
+        </div>
+    </div>
+</form>
+
+
+
+        <!-- Emotional Response Speed and Strength -->
+        <div class="section">
+      <h3 class="zh">1. 情感表達強度</h3>
+      <h3 class="en hidden">1. Emotional Expression Intensity</h3>
+      <div class="checkbox-group">
+          <label class="tooltip">
+              <input type="checkbox" name="emotional" value="enthusiastic">
+              <span class="zh">熱情洋溢型</span>
+              <span class="en hidden">Enthusiastic</span>
+              <span class="tooltiptext zh">
+                  這種人非常外向，語氣總是充滿活力
+                  <span class="example">例如：「哇塞，這個超級棒！我真的超愛！」</span>
+              </span>
+              <span class="tooltiptext en hidden">
+                  Very extroverted, always speaks with energy
+                  <span class="example">Example: "Wow, this is super awesome! I really love it!"</span>
+              </span>
+          </label>
+          <label class="tooltip">
+              <input type="checkbox" name="emotional" value="warm">
+              <span class="zh">溫暖細膩型</span>
+              <span class="en hidden">Warm</span>
+              <span class="tooltiptext zh">
+                  表達情感時會多用關懷的語氣
+                  <span class="example">例如：「這種感覺真的很治癒，希望你們也能感受到～」</span>
+              </span>
+              <span class="tooltiptext en hidden">
+                  Uses caring tones when expressing emotions
+                  <span class="example">Example: "This feeling is really healing, I hope you can feel it too~"</span>
+              </span>
+          </label>
+          <label class="tooltip">
+              <input type="checkbox" name="emotional" value="reserved">
+              <span class="zh">內斂冷靜型</span>
+              <span class="en hidden">Reserved</span>
+              <span class="tooltiptext zh">
+                  表達情感時不會過於外放，可能更低調
+                  <span class="example">例如：「嗯，我覺得這樣挺不錯，值得一試。」</span>
+              </span>
+              <span class="tooltiptext en hidden">
+                  More reserved in emotional expression, tends to be low-key
+                  <span class="example">Example: "Hmm, I think this is pretty good, worth trying."</span>
+              </span>
+          </label>
+          <label class="tooltip">
+              <input type="checkbox" name="emotional" value="dramatic">
+              <span class="zh">戲劇誇張型</span>
+              <span class="en hidden">Dramatic</span>
+              <span class="tooltiptext zh">
+                  情感表達非常戲劇化，常用幽默或誇張來渲染
+                  <span class="example">例如：「哈哈哈，我的天，這個真的笑死我啦！」</span>
+              </span>
+              <span class="tooltiptext en hidden">
+                  Very dramatic in expression, often uses humor and exaggeration
+                  <span class="example">Example: "Hahaha, oh my god, this is literally killing me!"</span>
+              </span>
+          </label>
+      </div>
+  </div>
+
+
+  <div class="section">
+<h3 class="zh">2. 與觀眾的連結態度</h3>
+<h3 class="en hidden">2. Audience Connection Style</h3>
+<div class="checkbox-group">
+    <label class="tooltip">
+        <input type="checkbox" name="connection" value="empathetic">
+        <span class="zh">強烈共情型</span>
+        <span class="en hidden">Empathetic</span>
+        <span class="tooltiptext zh">
+            特別在意觀眾的感受，常用共鳴的方式與觀眾連結
+            <span class="example">例如：「我知道你們的感覺」、「大家是不是也這麼想？」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Particularly mindful of audience feelings, often builds emotional connections
+            <span class="example">Example: "I know how you feel", "Does everyone think the same?"</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="connection" value="guiding">
+        <span class="zh">啟發引導型</span>
+        <span class="en hidden">Guiding</span>
+        <span class="tooltiptext zh">
+            更注重給予建議，語氣會偏「導師型」
+            <span class="example">例如：「如果你也遇到這樣的情況，不妨試試這個方法～」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Focuses on giving advice, uses a mentor-like tone
+            <span class="example">Example: "If you encounter this situation, you might want to try this method~"</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="connection" value="entertaining">
+        <span class="zh">娛樂互動型</span>
+        <span class="en hidden">Entertaining</span>
+        <span class="tooltiptext zh">
+            喜歡用逗趣的方式和觀眾互動
+            <span class="example">例如：「這個真的不試試嗎？不然虧大啦～」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Likes to interact with audience in a playful way
+            <span class="example">Example: "Aren't you going to try this? You'll miss out~"</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="connection" value="analytical">
+        <span class="zh">理性分析型</span>
+        <span class="en hidden">Analytical</span>
+        <span class="tooltiptext zh">
+            更注重分享知識，對觀眾態度是中立專業的
+            <span class="example">例如：「這個數據值得參考，對你們應該有幫助。」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Focuses on sharing knowledge with a neutral, professional attitude
+            <span class="example">Example: "This data is worth referring to, it should be helpful for you."</span>
+        </span>
+    </label>
+</div>
+</div>
+
+        <div class="section">
+            <h3 class="zh">3. 情感反應的速度與強弱</h3>
+            <h3 class="en hidden">3. Emotional Response Speed and Intensity</h3>
+            <div class="checkbox-group">
+                <label class="tooltip">
+                    <input type="checkbox" name="response" value="quick">
+                    <span class="zh">快速反應型</span><span class="en hidden">Quick Response</span>
+                    <span class="tooltiptext zh">對事件反應迅速，語氣可能有點「炸裂」</span>
+                    <span class="tooltiptext en hidden">Quick to react, possibly with explosive expressions</span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="response" value="slow">
+                    <span class="zh">慢速回味型</span><span class="en hidden">Slow Response</span>
+                    <span class="tooltiptext zh">需要思考一下再表達情感，語氣更平和</span>
+                    <span class="tooltiptext en hidden">Takes time to process before expressing emotions, more calm tone</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Additional sections for Challenges, Social Circles, Life Philosophy, etc. -->
+        <div class="section">
+            <h3 class="zh">4. 面對挫折和挑戰的態度</h3>
+            <h3 class="en hidden">4. Attitude Towards Challenges</h3>
+            <div class="checkbox-group">
+              <label class="tooltip">
+                   <input type="checkbox" name="challenge" value="optimistic">
+                   <span class="zh">樂觀積極型</span>
+                   <span class="en hidden">Optimistic</span>
+                   <span class="tooltiptext zh">
+                       總能看到事物的好面
+                       <span class="example">例如：「沒關係啦，試過就有經驗嘛～」</span>
+                   </span>
+                   <span class="tooltiptext en hidden">
+                       Always able to see the bright side
+                       <span class="example">Example: "It's okay, at least we gained experience~"</span>
+                   </span>
+               </label>
+               <label class="tooltip">
+                   <input type="checkbox" name="challenge" value="practical">
+                   <span class="zh">現實務實型</span>
+                   <span class="en hidden">Practical</span>
+                   <span class="tooltiptext zh">
+                       面對挑戰會考慮現實因素
+                       <span class="example">例如：「這樣做有點難度，不過還是有可能的！」</span>
+                   </span>
+                   <span class="tooltiptext en hidden">
+                       Considers realistic factors when facing challenges
+                       <span class="example">Example: "This might be difficult, but it's still possible!"</span>
+                   </span>
+               </label>
+               <label class="tooltip">
+                   <input type="checkbox" name="challenge" value="humorous">
+                   <span class="zh">戲謔幽默型</span>
+                   <span class="en hidden">Humorous</span>
+                   <span class="tooltiptext zh">
+                       用輕鬆的方式面對困難
+                       <span class="example">例如：「哈哈，我摔了一跤，但這招還挺酷的吧？」</span>
+                   </span>
+                   <span class="tooltiptext en hidden">
+                       Faces difficulties with a light-hearted approach
+                       <span class="example">Example: "Haha, I fell down, but that move was pretty cool, right?"</span>
+                   </span>
+               </label>
+               <label class="tooltip">
+                   <input type="checkbox" name="challenge" value="persistent">
+                   <span class="zh">堅韌執著型</span>
+                   <span class="en hidden">Persistent</span>
+                   <span class="tooltiptext zh">
+                       即使困難重重，也會保持堅定
+                       <span class="example">例如：「再難也要咬牙撐下去，只有努力才有結果！」</span>
+                   </span>
+                   <span class="tooltiptext en hidden">
+                       Stays determined despite difficulties
+                       <span class="example">Example: "No matter how hard it gets, we must persist. Only effort leads to results!"</span>
+                   </span>
+               </label>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="zh">5. 與自身情感的連結方式</h3>
+            <h3 class="en hidden">5. Emotional Connection Style</h3>
+            <div class="checkbox-group">
+              <label class="tooltip">
+                  <input type="radio" name="emotion" value="introspective">
+                  <span class="zh">自省型</span>
+                  <span class="en hidden">Introspective</span>
+                  <span class="tooltiptext zh">
+                      經常內省和思考
+                      <span class="example">例如：「其實我覺得這次失敗也讓我學到了很多。」</span>
+                  </span>
+                  <span class="tooltiptext en hidden">
+                      Frequently introspects and reflects
+                      <span class="example">Example: "Actually, I think this failure taught me a lot."</span>
+                  </span>
+              </label>
+              <label class="tooltip">
+                  <input type="radio" name="emotion" value="expressive">
+                  <span class="zh">外放型</span>
+                  <span class="en hidden">Expressive</span>
+                  <span class="tooltiptext zh">
+                      情感直接表達，可能更多用開心、激動等外顯情緒
+                      <span class="example">例如：「超開心的，這次真的大成功！」</span>
+                  </span>
+                  <span class="tooltiptext en hidden">
+                      Directly expresses emotions, often using joy and excitement
+                      <span class="example">Example: "So happy, this time it was a huge success!"</span>
+                  </span>
+              </label>
+              <label class="tooltip">
+                  <input type="radio" name="emotion" value="balanced">
+                  <span class="zh">平衡型</span>
+                  <span class="en hidden">Balanced</span>
+                  <span class="tooltiptext zh">
+                      對情感的表達收放自如
+                      <span class="example">例如：「雖然有點遺憾，但我還是挺滿意的～」</span>
+                  </span>
+                  <span class="tooltiptext en hidden">
+                      Expresses emotions with balance and control
+                      <span class="example">Example: "Although a bit regretful, I'm still quite satisfied."</span>
+                  </span>
+              </label>
+              </div>
+        </div>
+
+        <div class="section">
+            <h3 class="zh">6. 對不同場景的情感偏好</h3>
+            <h3 class="en hidden">6. Emotional Preference for Different Scenarios</h3>
+            <div class="checkbox-group">
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="challenge-loving">
+        <span class="zh">熱愛挑戰型</span>
+        <span class="en hidden">Challenge-Loving</span>
+        <span class="tooltiptext zh">
+            偏向挑戰性高的事情
+            <span class="example">例如：「這種高難度的挑戰才有意思嘛！」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Prefers highly challenging situations
+            <span class="example">Example: "This kind of high-difficulty challenge is what makes it fun!"</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="peace-loving">
+        <span class="zh">享受安穩型</span>
+        <span class="en hidden">Peace-Loving</span>
+        <span class="tooltiptext zh">
+            更偏愛平靜的場景
+            <span class="example">例如：「這樣的日常生活真的讓人好安心啊。」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Prefers calm and peaceful scenarios
+            <span class="example">Example: "This kind of daily life really makes me feel at ease."</span>
+        </span>
+    </label>
+    <!-- Previous options continued... -->
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="philosophical">
+        <span class="zh">哲思型</span>
+        <span class="en hidden">Philosophical</span>
+        <span class="tooltiptext zh">
+            喜歡思考人生和存在的意義
+            <span class="example">例如：「人生的真諦到底是什麼呢？值得深思。」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Enjoys contemplating life and existence
+            <span class="example">Example: "What is the true meaning of life? It's worth pondering."</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="aesthetic">
+        <span class="zh">美學追求型</span>
+        <span class="en hidden">Aesthetic</span>
+        <span class="tooltiptext zh">
+            對美的事物特別敏感
+            <span class="example">例如：「這個設計的美感真的太棒了！」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Particularly sensitive to aesthetic beauty
+            <span class="example">Example: "The aesthetics of this design are simply amazing!"</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="nostalgic">
+        <span class="zh">懷舊感性型</span>
+        <span class="en hidden">Nostalgic</span>
+        <span class="tooltiptext zh">
+            容易被回憶觸動
+            <span class="example">例如：「這讓我想起了那些美好的往事。」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Easily moved by memories
+            <span class="example">Example: "This reminds me of those beautiful past memories."</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="empathetic">
+        <span class="zh">同理心強型</span>
+        <span class="en hidden">Empathetic</span>
+        <span class="tooltiptext zh">
+            善於體會他人的情感
+            <span class="example">例如：「我完全能理解你現在的心情。」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Good at understanding others' feelings
+            <span class="example">Example: "I can completely understand how you're feeling right now."</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="playful">
+        <span class="zh">調皮玩趣型</span>
+        <span class="en hidden">Playful</span>
+        <span class="tooltiptext zh">
+            喜歡開玩笑和惡作劇
+            <span class="example">例如：「嘿嘿，這個惡作劇一定很有趣！」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Enjoys joking and pranks
+            <span class="example">Example: "Hehe, this prank will be so fun!"</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="perfectionist">
+        <span class="zh">完美追求型</span>
+        <span class="en hidden">Perfectionist</span>
+        <span class="tooltiptext zh">
+            追求事事完美的態度
+            <span class="example">例如：「這裡還可以再改進一下，追求更好！」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Strives for perfection in everything
+            <span class="example">Example: "This could still be improved, let's make it better!"</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="minimalist">
+        <span class="zh">簡約主義型</span>
+        <span class="en hidden">Minimalist</span>
+        <span class="tooltiptext zh">
+            喜歡簡單純粹的生活方式
+            <span class="example">例如：「少即是多，簡單才是真。」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Prefers a simple and pure lifestyle
+            <span class="example">Example: "Less is more, simplicity is truth."</span>
+        </span>
+    </label>
+    <label class="tooltip">
+        <input type="checkbox" name="scenario" value="optimistic">
+        <span class="zh">樂觀開朗型</span>
+        <span class="en hidden">Optimistic</span>
+        <span class="tooltiptext zh">
+            永遠保持積極正面的心態
+            <span class="example">例如：「明天一定會更好的！」</span>
+        </span>
+        <span class="tooltiptext en hidden">
+            Always maintains a positive attitude
+            <span class="example">Example: "Tomorrow will definitely be better!"</span>
+        </span>
+    </label>
+</div>
+</div>
+
+
+
+        <div class="section">
+            <h3 class="zh">7. 情感波動的頻率</h3>
+            <h3 class="en hidden">7. Emotional Fluctuation Frequency</h3>
+            <div class="radio-group">
+                <label class="tooltip">
+                    <input type="radio" name="fluctuation" value="high">
+                    <span class="zh">高波動型</span>
+                    <span class="en hidden">High Fluctuation</span>
+                    <span class="tooltiptext zh">
+                        情緒變化快，容易興奮也容易失望
+                        <span class="example">例如：「剛才還覺得很棒，現在發現有點坑啊！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Emotions change quickly, easily excited and disappointed
+                        <span class="example">Example: "I thought it was great just now, but now I feel it's a bit disappointing!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="radio" name="fluctuation" value="low">
+                    <span class="zh">低波動型</span>
+                    <span class="en hidden">Low Fluctuation</span>
+                    <span class="tooltiptext zh">
+                        情緒比較穩定，給人一種沉穩可靠的感覺
+                        <span class="example">例如：「整體看來，還是挺不錯的，值得推薦。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Emotions are relatively stable, giving a calm and reliable impression
+                        <span class="example">Example: "Overall, it's still quite good and worth recommending."</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="zh">8. 與目標相關的態度</h3>
+            <h3 class="en hidden">8. Attitude Towards Goals</h3>
+            <div class="radio-group">
+                <label class="tooltip">
+                    <input type="radio" name="goal" value="persistent-dreamer">
+                    <span class="zh">執著追夢型</span>
+                    <span class="en hidden">Persistent Dreamer</span>
+                    <span class="tooltiptext zh">
+                        充滿激情和動力
+                        <span class="example">例如：「不管多難，我一定要完成這件事！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Full of passion and motivation
+                        <span class="example">Example: "No matter how hard it is, I must accomplish this!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="radio" name="goal" value="easy-going">
+                    <span class="zh">隨性自然型</span>
+                    <span class="en hidden">Easy-Going</span>
+                    <span class="tooltiptext zh">
+                        更看重過程中的感受
+                        <span class="example">例如：「過程開心就好，結果其實沒那麼重要。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Focuses more on the journey than the outcome
+                        <span class="example">Example: "As long as I'm happy during the process, the result doesn't really matter."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="radio" name="goal" value="competitive">
+                    <span class="zh">競爭挑戰型</span>
+                    <span class="en hidden">Competitive</span>
+                    <span class="tooltiptext zh">
+                        非常在意超越他人
+                        <span class="example">例如：「我要做的，就是做到最好！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Pays great attention to surpassing others
+                        <span class="example">Example: "What I aim for is to be the best!"</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="zh">9. 興趣愛好</h3>
+            <h3 class="en hidden">9. Hobbies and Interests</h3>
+            <div class="checkbox-group">
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="sporty">
+                    <span class="zh">運動型</span>
+                    <span class="en hidden">Sporty</span>
+                    <span class="tooltiptext zh">
+                        語氣充滿能量
+                        <span class="example">例如：「跑步這事兒，‘一腳一步’，咱就跑出成績來了！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Full of energy in tone
+                        <span class="example">Example: "Running is about 'one step at a time,' and we can achieve great results!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="artistic">
+                    <span class="zh">文藝型</span>
+                    <span class="en hidden">Artistic</span>
+                    <span class="tooltiptext zh">
+                        語氣偏感性
+                        <span class="example">例如：「看書是一種靜心的修行，每一頁都有它的故事。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone is more emotional
+                        <span class="example">Example: "Reading is a calming practice, and every page tells its own story."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="homebody">
+                    <span class="zh">宅家型</span>
+                    <span class="en hidden">Homebody</span>
+                    <span class="tooltiptext zh">
+                        語氣更隨意
+                        <span class="example">例如：「我喜歡‘窩’在沙發上，這才叫享受人生嘛！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone is more casual
+                        <span class="example">Example: "I love 'nesting' on the couch; that's what enjoying life is all about!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="travel">
+                    <span class="zh">旅行型</span>
+                    <span class="en hidden">Travel</span>
+                    <span class="tooltiptext zh">
+                        喜歡探索世界，尋找新的體驗
+                        <span class="example">例如：「走走看看，每個地方都有故事等著我。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Loves exploring the world and seeking new experiences
+                        <span class="example">Example: "Traveling around, every place has a story waiting for me."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="tech-savvy">
+                    <span class="zh">科技控</span>
+                    <span class="en hidden">Tech-Savvy</span>
+                    <span class="tooltiptext zh">
+                        熱衷於新科技和小工具
+                        <span class="example">例如：「這款新設備，真的太酷了，必須入手！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Passionate about new technology and gadgets
+                        <span class="example">Example: "This new device is so cool, I have to get it!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="culinary">
+                    <span class="zh">美食型</span>
+                    <span class="en hidden">Culinary</span>
+                    <span class="tooltiptext zh">
+                        熱愛烹飪和嘗試新菜式
+                        <span class="example">例如：「今天這道菜，我給它滿分！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Loves cooking and trying new dishes
+                        <span class="example">Example: "This dish today gets a perfect score from me!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="musical">
+                    <span class="zh">音樂型</span>
+                    <span class="en hidden">Musical</span>
+                    <span class="tooltiptext zh">
+                        對音樂充滿熱情，喜歡演奏或欣賞
+                        <span class="example">例如：「這首曲子真的讓我陶醉。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Passionate about music, loves playing or listening
+                        <span class="example">Example: "This piece really captivates me."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="gardening">
+                    <span class="zh">園藝型</span>
+                    <span class="en hidden">Gardening</span>
+                    <span class="tooltiptext zh">
+                        喜歡親近自然，種植花草
+                        <span class="example">例如：「看著花開，心情特別好。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Enjoys connecting with nature and planting flowers
+                        <span class="example">Example: "Watching flowers bloom makes me feel so good."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="gaming">
+                    <span class="zh">遊戲型</span>
+                    <span class="en hidden">Gaming</span>
+                    <span class="tooltiptext zh">
+                        對電玩遊戲或桌遊充滿熱情
+                        <span class="example">例如：「這局太精彩了，我還想再來一局！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Passionate about video or board games
+                        <span class="example">Example: "That game was amazing, I want to play another round!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="photography">
+                    <span class="zh">攝影型</span>
+                    <span class="en hidden">Photography</span>
+                    <span class="tooltiptext zh">
+                        喜歡捕捉美麗的瞬間
+                        <span class="example">例如：「這一刻，我一定要用相機記錄下來。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Loves capturing beautiful moments
+                        <span class="example">Example: "I must capture this moment with my camera."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="writing">
+                    <span class="zh">寫作型</span>
+                    <span class="en hidden">Writing</span>
+                    <span class="tooltiptext zh">
+                        熱愛用文字表達自我或記錄生活
+                        <span class="example">例如：「寫作讓我感覺非常自由和快樂。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Loves expressing oneself or recording life through words
+                        <span class="example">Example: "Writing makes me feel very free and happy."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="dancing">
+                    <span class="zh">舞蹈型</span>
+                    <span class="en hidden">Dancing</span>
+                    <span class="tooltiptext zh">
+                        對舞蹈充滿熱情，享受音樂與節奏的結合
+                        <span class="example">例如：「舞動起來，感覺一切都充滿活力。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Passionate about dance, enjoying the combination of music and rhythm
+                        <span class="example">Example: "Dancing makes everything feel full of energy."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="hobby" value="volunteering">
+                    <span class="zh">志願服務型</span>
+                    <span class="en hidden">Volunteering</span>
+                    <span class="tooltiptext zh">
+                        喜歡幫助他人和回饋社會
+                        <span class="example">例如：「每次志願活動都讓我覺得特別有意義。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Loves helping others and giving back to the community
+                        <span class="example">Example: "Every volunteer activity feels especially meaningful to me."</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="zh">10. 社交圈層</h3>
+            <h3 class="en hidden">10. Social Circles</h3>
+            <div class="radio-group">
+                <label class="tooltip">
+                    <input type="radio" name="social" value="broad">
+                    <span class="zh">廣泛社交圈</span>
+                    <span class="en hidden">Broad Social Circle</span>
+                    <span class="tooltiptext zh">
+                        語氣會更外向，喜歡開玩笑
+                        <span class="example">例如：「這活動，我朋友圈都在打卡，怎能錯過！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone tends to be outgoing and playful
+                        <span class="example">Example: "This event is all over my social feed, how could I miss it!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="radio" name="social" value="small">
+                    <span class="zh">小圈子型</span>
+                    <span class="en hidden">Small Circle</span>
+                    <span class="tooltiptext zh">
+                        語氣更低調
+                        <span class="example">例如：「這些事就我們幾個知道，簡單聊聊就好～」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone is more reserved
+                        <span class="example">Example: "These things are just for us to know, let's keep it simple."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="radio" name="social" value="loner">
+                    <span class="zh">孤獨型</span>
+                    <span class="en hidden">Loner</span>
+                    <span class="tooltiptext zh">
+                        語氣可能帶點疏離
+                        <span class="example">例如：「與其熱鬧，不如安靜一會兒自己享受時光。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone may carry a hint of detachment
+                        <span class="example">Example: "Instead of the noise, I'd rather enjoy some quiet time by myself."</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <div class="section">
+        <h3 class="zh">11. 生活哲學</h3>
+        <h3 class="en hidden">11. Life Philosophy</h3>
+        <div class="radio-group">
+        <label class="tooltip">
+            <input type="radio" name="philosophy" value="optimistic">
+            <span class="zh">樂觀派</span>
+            <span class="en hidden">Optimistic</span>
+            <span class="tooltiptext zh">
+                常用鼓舞人心的語句
+                <span class="example">例如：「一切都會好起來的，關鍵是自己得先堅定！」</span>
+            </span>
+            <span class="tooltiptext en hidden">
+                Frequently uses uplifting phrases
+                <span class="example">Example: "Everything will get better; the key is to stay strong!"</span>
+            </span>
+        </label>
+        <label class="tooltip">
+            <input type="radio" name="philosophy" value="pessimistic">
+            <span class="zh">悲觀派</span>
+            <span class="en hidden">Pessimistic</span>
+            <span class="tooltiptext zh">
+                語氣可能帶點無奈
+                <span class="example">例如：「唉，生活就是這樣，有時候努力也不一定有結果。」</span>
+            </span>
+            <span class="tooltiptext en hidden">
+                Tone may carry a hint of resignation
+                <span class="example">Example: "Sigh, life is just like this; sometimes effort doesn't guarantee results."</span>
+            </span>
+        </label>
+        <label class="tooltip">
+            <input type="radio" name="philosophy" value="carefree">
+            <span class="zh">隨性派</span>
+            <span class="en hidden">Carefree</span>
+            <span class="tooltiptext zh">
+                語氣輕鬆自如
+                <span class="example">例如：「日子嘛，怎麼開心怎麼過就行啦！」</span>
+            </span>
+            <span class="tooltiptext en hidden">
+                Tone is relaxed and casual
+                <span class="example">Example: "Life is all about enjoying it however you like!"</span>
+            </span>
+        </label>
+        </div>
+        </div>
+
+        <div class="section">
+            <h3 class="zh">12. 特殊經歷</h3>
+            <h3 class="en hidden">12. Unique Experiences</h3>
+            <div class="checkbox-group">
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="difficulties-overcome">
+                    <span class="zh">曾經困難重重</span>
+                    <span class="en hidden">Overcame Difficulties</span>
+                    <span class="tooltiptext zh">
+                        語氣可能帶點感慨
+                        <span class="example">例如：「這些年吃的苦，現在回頭看，還真是‘值’了！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone may carry a sense of reflection
+                        <span class="example">Example: "The hardships I've endured over the years, looking back now, were truly worth it!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="career-success">
+                    <span class="zh">事業大成功</span>
+                    <span class="en hidden">Career Success</span>
+                    <span class="tooltiptext zh">
+                        語氣自信
+                        <span class="example">例如：「這些事，說到底就是‘堅持到底’！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone is confident
+                        <span class="example">Example: "At the end of the day, it's all about perseverance!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="travel-experienced">
+                    <span class="zh">旅遊經驗豐富</span>
+                    <span class="en hidden">Well-Traveled</span>
+                    <span class="tooltiptext zh">
+                        語氣會更開放
+                        <span class="example">例如：「世界這麼大，總有一些地方讓人忘記煩惱～」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Tone is more open-minded
+                        <span class="example">Example: "The world is so big, there are always places that make you forget your worries~"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="artistic-achievements">
+                    <span class="zh">藝術成就</span>
+                    <span class="en hidden">Artistic Achievements</span>
+                    <span class="tooltiptext zh">
+                        對創作的熱愛和成就
+                        <span class="example">例如：「這幅畫得了獎，讓我特別有成就感。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Passion for creation and accomplishments
+                        <span class="example">Example: "This painting won an award, and it made me feel very accomplished."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="sports-victories">
+                    <span class="zh">體育勝利</span>
+                    <span class="en hidden">Sports Victories</span>
+                    <span class="tooltiptext zh">
+                        運動中的難忘時刻
+                        <span class="example">例如：「那次比賽的最後一球，我永遠記得！」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Memorable moments in sports
+                        <span class="example">Example: "That last shot in the game, I'll never forget it!"</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="volunteer-activities">
+                    <span class="zh">志工活動</span>
+                    <span class="en hidden">Volunteer Activities</span>
+                    <span class="tooltiptext zh">
+                        幫助他人，回饋社會
+                        <span class="example">例如：「參與過社區建設，真的很有意義。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Helping others and giving back to the community
+                        <span class="example">Example: "Participating in community building was truly meaningful."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="family-milestones">
+                    <span class="zh">家庭里程碑</span>
+                    <span class="en hidden">Family Milestones</span>
+                    <span class="tooltiptext zh">
+                        重要的家庭時刻
+                        <span class="example">例如：「孩子的第一次學步，真的特別珍貴。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Important family moments
+                        <span class="example">Example: "The first steps of my child were truly precious."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="academic-success">
+                    <span class="zh">學術成就</span>
+                    <span class="en hidden">Academic Success</span>
+                    <span class="tooltiptext zh">
+                        學習上的里程碑
+                        <span class="example">例如：「終於拿到了夢想中的學位。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Milestones in education
+                        <span class="example">Example: "Finally got the degree I always dreamed of."</span>
+                    </span>
+                </label>
+                <label class="tooltip">
+                    <input type="checkbox" name="experience" value="culinary-explorations">
+                    <span class="zh">美食探索</span>
+                    <span class="en hidden">Culinary Explorations</span>
+                    <span class="tooltiptext zh">
+                        對美食的熱愛和嘗試
+                        <span class="example">例如：「嘗試了一道異國料理，真的很棒。」</span>
+                    </span>
+                    <span class="tooltiptext en hidden">
+                        Love for food and trying new cuisines
+                        <span class="example">Example: "Tried a foreign dish, it was amazing."</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+
+        <button type="button" onclick="generateSummary()" class="zh">生成總結</button>
+        <button type="button" onclick="generateSummary()" class="en hidden">Generate Summary</button>
+
+        <textarea id="summary" readonly></textarea>
+    </form>
+
+    <script>
+        function toggleLanguage() {
+            document.querySelectorAll('.zh, .en').forEach(el => {
+                el.classList.toggle('hidden');
+            });
+        }
+
+        function generateSummary() {
+            const form = document.getElementById('personalityForm');
+            let summary = '';
+
+            // Basic info
+            const gender = document.getElementById('gender').value;
+            const age = document.getElementById('age').value;
+            const bloodType = form.querySelector('input[name="bloodType"]:checked')?.value;
+            const zodiac = form.querySelector('input[name="zodiac"]:checked')?.value;
+            const mbti = form.querySelector('input[name="mbti"]:checked')?.value;
+
+            // Construct summary
+            summary += `基本資料/Basic Info:\n`;
+            summary += `性別/Gender: ${gender}\n`;
+            summary += `年齡/Age: ${age}\n`;
+            summary += `血型/Blood Type: ${bloodType}\n`;
+            summary += `星座/Zodiac: ${zodiac}\n`;
+            summary += `MBTI: ${mbti}\n\n`;
+
+            // Get checked characteristics for all sections
+            const emotional = Array.from(form.querySelectorAll('input[name="emotional"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const connection = Array.from(form.querySelectorAll('input[name="connection"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const response = Array.from(form.querySelectorAll('input[name="response"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const challenge = Array.from(form.querySelectorAll('input[name="challenge"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const emotion = Array.from(form.querySelectorAll('input[name="emotion"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const scenario = Array.from(form.querySelectorAll('input[name="scenario"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const fluctuation = Array.from(form.querySelectorAll('input[name="fluctuation"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const goal = Array.from(form.querySelectorAll('input[name="goal"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const hobby = Array.from(form.querySelectorAll('input[name="hobby"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const social = Array.from(form.querySelectorAll('input[name="social"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const philosophy = Array.from(form.querySelectorAll('input[name="philosophy"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+            const experience = Array.from(form.querySelectorAll('input[name="experience"]:checked'))
+                .map(cb => cb.value)
+                .join(', ');
+
+
+
+            summary += `Emotional Expression: ${emotional}\n`;
+            summary += `Audience Connection: ${connection}\n`;
+            summary += `Emotional Response: ${response}\n`;
+            summary += `Attitude Towards Challenges: ${challenge}\n`;
+            summary += `Emotional Connection Style: ${emotion}\n`;
+            summary += `Emotional Preference for Different Scenarios: ${scenario}\n`;
+            summary += `Emotional Fluctuation Frequency: ${fluctuation}\n`;
+            summary += `Attitude Towards Goals: ${goal}\n`;
+            summary += `Hobbies and Interests: ${hobby}\n`;
+            summary += `Social Circles: ${social}\n`;
+            summary += `Life Philosophy: ${philosophy}\n`;
+            summary += `Unique Experiences: ${experience}\n`;
+
+
+            document.getElementById('summary').value = summary;
+        }
+    </script>
+</body>
+</html>
